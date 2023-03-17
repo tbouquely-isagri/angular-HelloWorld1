@@ -18,4 +18,16 @@ export class App {
   name = 'Angular';
 }
 
+class Person {
+  name: string;
+  weight: number;
+  public weightValidate() {
+    if (this.weight < 0) {
+      return 'le poids ne peut etre inférieure à zéro !';
+    } else {
+      return '';
+    }
+  }
+}
+
 bootstrapApplication(App);
