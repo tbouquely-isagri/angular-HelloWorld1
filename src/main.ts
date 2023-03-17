@@ -31,9 +31,14 @@ export class App {
     var f = (line: string) => this.resultats.push({ text: line });
     f('----------------------------------');
     this.resultats.push(title);
+    f('  ' + title);
     f('  actual = ' + actualValue);
     f('  expected = ' + expectedValue);
-    f('  différence = ' + (actualValue == expectedValue));
+    if (actualValue == expectedValue) {
+      f('  identique');
+    } else {
+      f('   DIFFERENT DIFFERENT DIFFERENT DIFFERENT');
+    }
   }
 
   public onClick001() {
@@ -43,17 +48,17 @@ export class App {
     this.AddResultat(
       'A : validation directe sur une Personne = ',
       bob1.PoidsValidate(),
-      ''
+      'bob1|71'
     );
 
     this.AddResultat(
       'B : validation via une méthode statique porté sur la classe Personne = ',
       Personne.PoidsValidateOn(bob1),
-      ''
+      'bob1|71'
     );
 
     var bob2AsSimpleObjectFromJSon = {
-      NomCommun: 'bob 222222222222',
+      NomCommun: 'bob2',
       Poids: 72.0,
     };
 
@@ -67,7 +72,7 @@ export class App {
     this.AddResultat(
       'C : tentative de la methode bind sur la méthode de validation, KO = ',
       bob1.PoidsValidate(),
-      ''
+      'bob2|72'
     );
 
     // ça, par contre, ça fonctionne
@@ -77,48 +82,48 @@ export class App {
     // je souhaite me servir d'un bob1 "vide" juste porteur des méthodes de validation
     Object.assign(bob1, bob2AsSimpleObjectFromJSon);
     this.AddResultat(
-      "D : utilisation dela méthode Object.assign, ça marche mais l'état est copié, c'est pas ce qu'on veut = ",
+      "D : utilisation dela méthode Object.assign, ça marche mais l'état est copié, c'est pas ce que je veut, pas performant",
       bob1.PoidsValidate(),
-      ''
+      'bob2|72'
     );
 
     // par contre, Object contient plein de méthode générique bas niveau :)
     var emptyPersonne = new Personne('', 0);
-    var bob3 = new Personne('bob 3333', 333);
+    var bob3 = new Personne('bob3', 333);
     this.AddResultat(
       'E1 : on créer une Personne vide = ',
       emptyPersonne.PoidsValidate(),
-      ''
+      '|0'
     );
     this.AddResultat(
       'E1 : On utilise sa méthode de validation via APPLY, OK = ',
       emptyPersonne.PoidsValidate.apply(bob3),
-      ''
+      'bob3|333'
     );
     this.AddResultat(
       'E1 : On utilise sa méthode de validation via CALL, OK = ',
       emptyPersonne.PoidsValidate.call(bob3),
-      ''
+      'bob3|333'
     );
     this.AddResultat(
       "E1 : On vérifier que l'état de la personne vide est toujours vide = ",
       emptyPersonne.PoidsValidate(),
-      ''
+      '|0'
     );
     this.AddResultat(
       "E1 : On tente maintenant d'utiliser un objet TS de structure identique mais ce n'est pas une Personne, APPLY = ",
       emptyPersonne.PoidsValidate.apply(bob2AsSimpleObjectFromJSon),
-      ''
+      'bob2|72'
     );
     this.AddResultat(
       "E1 : On tente maintenant d'utiliser un objet TS de structure identique mais ce n'est pas une Personne, CALL = ",
       emptyPersonne.PoidsValidate.call(bob2AsSimpleObjectFromJSon),
-      ''
+      'bob2|72'
     );
     this.AddResultat(
       'E1 : notre personne vide est toujours vide ! = ',
       emptyPersonne.PoidsValidate(),
-      ''
+      '|0'
     );
   }
 }
