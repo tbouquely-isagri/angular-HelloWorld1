@@ -17,7 +17,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
     this dynamique !
     le this en question peut etre un simple flux json / object à partir du moment ou les champs sont bien identique en type et nbre
     par contre, si la méthode appelée appel elle même d'autre méthode de la classe courante
-    ça ne fonctionne pas car l'objet qui se subtitue à this n'as pas la méthode en question, c'est logique !
+    ça ne fonctionne pas car l'objet qui se subtitue à this n'as pas la méthode en question, c'est logique ! quand on le sait !
 
     <h1>Experimentation</h1>
     <button type="button" (click)="onClick001()">Clic me ! 001</button>
